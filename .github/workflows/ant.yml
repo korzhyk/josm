@@ -92,3 +92,10 @@ jobs:
         with:
           name: JOSM.app revision ${{ env.josm_revision }}
           path: dist/JOSM.zip
+      - name: Update cask for JOSM in Homebrew
+        if: ${{ runner.os == 'macos' && success() }}
+        uses: mislav/bump-homebrew-formula-action@v1.7
+        with:
+          download-url: https://josm.openstreetmap.de/download/macosx/josm-macosx-${{ env.josm_revision }}.zip
+          homebrew-tap: Homebrew/homebrew-cask
+          commit-message: "Update {{formulaName}} to {{version}}"
